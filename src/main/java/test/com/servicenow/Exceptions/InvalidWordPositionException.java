@@ -1,4 +1,4 @@
-package test.com.loomsystems.Exceptions;
+package test.com.servicenow.Exceptions;
 
 public class InvalidWordPositionException extends Exception {
 

@@ -1,9 +1,8 @@
-;This is a mixed sentences of 4 and 5 words
+;This is a 4 word input
 01-01-2012 19:45:00 A B C D
 01-01-2012 20:12:39 A Z C D
 02-01-2012 09:13:15 A Z E D
 02-01-2012 09:13:15 A G C D
 02-01-2012 09:13:15 A Z G D
 02-01-2012 09:13:15 A A A A
-02-01-2012 09:13:15 A A A A A
-02-01-2012 09:13:15 A A A A B
+
