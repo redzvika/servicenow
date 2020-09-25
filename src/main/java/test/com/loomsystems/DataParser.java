@@ -1,5 +1,6 @@
 package test.com.loomsystems;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,17 +16,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DataParser {
-    private Map<Integer, CacheBuilder> sentenceLengthToCache = new HashMap<>();
+
     public static Logger logger = LogManager.getLogger("FilesParser");
     @Setter private List<Path> filePathList;
     @Setter private List<String> lines;
     private final int prefixToIgnore;
+    @Getter private Integer sentenceLength;
+
+    private List<Sentence> sentencesList=new ArrayList<>();
 
     public DataParser(int prefixToIgnore) {
         this.prefixToIgnore = prefixToIgnore;
     }
 
-    public List<CacheBuilder> parseToCacheBuilder() throws Exception {
+    public List<Sentence> parseToSentences() throws Exception {
         if (filePathList != null) {
             for (Path path : filePathList) {
                 parseFile(path);
@@ -33,34 +37,29 @@ public class DataParser {
         } else if (lines != null) {
             parseLines(lines);
         }
-        return sentenceLengthToCache.values().stream().collect(Collectors.toList());
+        return  sentencesList;
     }
 
     private void parseFile(Path path) throws Exception {
         String currentLine = null;
-        List<String> l = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
         BufferedReader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"));
         while ((currentLine = reader.readLine()) != null) {//while there is content on the current line
             if (!currentLine.startsWith(";")) {
-                l.add(currentLine);
+                lines.add(currentLine);
             }
         }
-        System.out.println("start:{}" + System.currentTimeMillis());
-        parseLines(l);
+        logger.debug("start:{}" , System.currentTimeMillis());
+        parseLines(lines);
     }
 
     private void parseLines(List<String> lines) throws Exception {
         for (int lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
             Sentence sentence = new Sentence(lines.get(lineNumber), lineNumber);
-            sentence.generateWords(prefixToIgnore);
-            CacheBuilder cacheBuilder = sentenceLengthToCache.get(sentence.getSentenceLength());
-            if (cacheBuilder == null) {
-                cacheBuilder = new CacheBuilder(sentence.getSentenceLength());
-                sentenceLengthToCache.put(sentence.getSentenceLength(), cacheBuilder);
-            }
-            cacheBuilder.addSentence(sentence);
-            for (int i = 0; i < sentence.getWords().size(); i++) {
-                cacheBuilder.addWord(sentence.getWords().get(i), lineNumber);
+            sentence.generateHashValues(prefixToIgnore);
+            sentencesList.add(sentence);
+            if (sentenceLength==null){
+                sentenceLength=sentence.getHashValueList().size();
             }
         }
     }

@@ -6,3 +6,4 @@
 03-01-2012 10:14:00 Naomi is eating at a diner
 02-01-2012 09:13:15 George is getting into the boat
 02-01-2012 09:13:15 George is getting into the spaceship
+02-01-2012 09:13:15 George was getting into the car

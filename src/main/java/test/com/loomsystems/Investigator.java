@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 public class Investigator {
 
@@ -18,12 +19,14 @@ public class Investigator {
 
                 DataParser dataParser=new DataParser(PREFIX_TO_IGNORE);
                 dataParser.setFilePathList(Arrays.asList(
-                        Paths.get("src/main/resources/input_4.txt"),
+                        //Paths.get("src/main/resources/input_4.txt"),
                         Paths.get("src/main/resources/input_6.txt")
                 ));
-                CacheAnalyzer analyzer=new CacheAnalyzer(dataParser.parseToCacheBuilder());
-                analyzer.analyze();
-                System.out.println("finish:"+System.currentTimeMillis());
+
+                SentencesAnalyzer sentencesAnalyzer=new SentencesAnalyzer(dataParser.parseToSentences(), dataParser.getSentenceLength());
+                sentencesAnalyzer.analyze();
+                //analyzer.analyze();
+                logger.debug("finish:"+System.currentTimeMillis());
 
             //System.out.print(input);
         }catch (Exception e){

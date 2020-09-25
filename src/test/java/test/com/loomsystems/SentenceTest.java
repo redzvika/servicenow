@@ -29,54 +29,54 @@ public class SentenceTest {
         Assert.assertEquals(testSubject.getRaw(),raw);
     }
 
-
-    @Test
-    public  void checkSixWordSentenceWithValidPrefix(){
-        testSubject=new Sentence("02-01-2012 09:13:15 A Z G D",4);
-        try {
-            testSubject.generateWords(2);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        Assert.assertEquals(testSubject.getWords().size(),4);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public  void checkSixWordSentenceWithInValidPrefix() throws Exception{
-        testSubject=new Sentence("02-01-2012 09:13:15 A Z G D",4);
-        testSubject.generateWords(-1);
-    }
-
-    @Test
-    public  void checkFourWordSentenceWithValidPrefix() throws Exception{
-        testSubject=new Sentence("02-01-2012 09:13:15 A Z",4);
-        testSubject.generateWords(2);
-        Assert.assertEquals(testSubject.getWords().size(),2);
-    }
-
-
-    @Test
-    public  void checkParse() throws Exception{
-        testSubject=new Sentence("xasdadaa,,,sdasdasd",1);
-        testSubject.generateWords(0);
-        Assert.assertEquals(testSubject.getWords().size(),1);
-
-
-        testSubject=new Sentence("xasdadaa\r\nsdasdasd",1);
-        testSubject.generateWords(0);
-        Assert.assertEquals(testSubject.getWords().size(),1);
-
-
-        testSubject=new Sentence("xasdadaa\t\tsdasdasd",1);
-        testSubject.generateWords(0);
-        Assert.assertEquals(testSubject.getWords().size(),1);
-
-
-        testSubject=new Sentence("xasdadaa::sdasdasd",1);
-        testSubject.generateWords(0);
-        Assert.assertEquals(testSubject.getWords().size(),1);
-    }
+//
+//    @Test
+//    public  void checkSixWordSentenceWithValidPrefix(){
+//        testSubject=new Sentence("02-01-2012 09:13:15 A Z G D",4);
+//        try {
+//            testSubject.generateWords(2);
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        Assert.assertEquals(testSubject.getWords().size(),4);
+//    }
+//
+//    @Test(expected = IndexOutOfBoundsException.class)
+//    public  void checkSixWordSentenceWithInValidPrefix() throws Exception{
+//        testSubject=new Sentence("02-01-2012 09:13:15 A Z G D",4);
+//        testSubject.generateWords(-1);
+//    }
+//
+//    @Test
+//    public  void checkFourWordSentenceWithValidPrefix() throws Exception{
+//        testSubject=new Sentence("02-01-2012 09:13:15 A Z",4);
+//        testSubject.generateWords(2);
+//        Assert.assertEquals(testSubject.getWords().size(),2);
+//    }
+//
+//
+//    @Test
+//    public  void checkParse() throws Exception{
+//        testSubject=new Sentence("xasdadaa,,,sdasdasd",1);
+//        testSubject.generateWords(0);
+//        Assert.assertEquals(testSubject.getWords().size(),1);
+//
+//
+//        testSubject=new Sentence("xasdadaa\r\nsdasdasd",1);
+//        testSubject.generateWords(0);
+//        Assert.assertEquals(testSubject.getWords().size(),1);
+//
+//
+//        testSubject=new Sentence("xasdadaa\t\tsdasdasd",1);
+//        testSubject.generateWords(0);
+//        Assert.assertEquals(testSubject.getWords().size(),1);
+//
+//
+//        testSubject=new Sentence("xasdadaa::sdasdasd",1);
+//        testSubject.generateWords(0);
+//        Assert.assertEquals(testSubject.getWords().size(),1);
+//    }
 
 
 

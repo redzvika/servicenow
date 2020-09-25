@@ -18,33 +18,33 @@ public class CacheAnalyzer {
 
 
 
-    private void printChange(Set<Map.Entry<Integer, List<Integer>>> set,CacheBuilder cacheBuilder){
+//    private void printChange(Set<Map.Entry<Integer, List<Integer>>> set,CacheBuilder cacheBuilder){
+//
+//        set.forEach(mapEntry->{
+//            int changePosition=mapEntry.getKey();
+//            List<Integer> list=mapEntry.getValue();
+//            StringBuilder builder=new StringBuilder();
+//            list.forEach(line->{
+//                System.out.println(cacheBuilder.getLineToSentence().get(line));
+//                builder.append(cacheBuilder.getLineToSentence().get(line).getWords().get(changePosition).getValue()).append(",");
+//            });
+//            if (builder.length()>2) {
+//                builder.delete(builder.length() - 1, builder.length() );
+//            }
+//            System.out.println(CHANGE_LINE+builder.toString());
+//
+//        });
+//    }
 
-        set.forEach(mapEntry->{
-            int changePosition=mapEntry.getKey();
-            List<Integer> list=mapEntry.getValue();
-            StringBuilder builder=new StringBuilder();
-            list.forEach(line->{
-                System.out.println(cacheBuilder.getLineToSentence().get(line));
-                builder.append(cacheBuilder.getLineToSentence().get(line).getWords().get(changePosition).getValue()).append(",");
-            });
-            if (builder.length()>2) {
-                builder.delete(builder.length() - 1, builder.length() );
-            }
-            System.out.println(CHANGE_LINE+builder.toString());
-
-        });
-    }
-
-    public List<Set<Map.Entry<Integer, List<Integer>>>> analyze(){
-        List<Set<Map.Entry<Integer, List<Integer>>>> list=new ArrayList<>();
-        cacheBuilders.forEach(cacheBuilder -> {
-            Set<Map.Entry<Integer, List<Integer>>>  result=analyzeSingleCache(cacheBuilder);
-            list.add(result);
-            printChange(result,cacheBuilder);
-        });
-        return list;
-    }
+//    public List<Set<Map.Entry<Integer, List<Integer>>>> analyze(){
+//        List<Set<Map.Entry<Integer, List<Integer>>>> list=new ArrayList<>();
+//        cacheBuilders.forEach(cacheBuilder -> {
+//            Set<Map.Entry<Integer, List<Integer>>>  result=analyzeSingleCache(cacheBuilder);
+//            list.add(result);
+//            printChange(result,cacheBuilder);
+//        });
+//        return list;
+//    }
 
     /**
      * Analyze a chacheBuilder ,
@@ -57,39 +57,39 @@ public class CacheAnalyzer {
      * @param cacheBuilder
      * @return
      */
-    private Set<Map.Entry<Integer, List<Integer>>>  analyzeSingleCache(CacheBuilder cacheBuilder){
-        logger.info("\r\n\r\n");
-        logger.info("analyzeSingleCache  CacheBuilder({})",cacheBuilder.getSentenceLength());
-        logger.info(cacheBuilder);
-        Set<Map.Entry<Integer, List<Integer>>> set=new HashSet<>();
-
-
-
-        for(int i=0;i<cacheBuilder.getSentences().size();i++){
-                List<Integer>[] workingArray = new ArrayList[cacheBuilder.getSentenceLength()];
-                Sentence sentence=cacheBuilder.getSentences().get(i);
-                Integer sentencePosition=new Integer(sentence.getLine());
-                logger.info("----------------  sentence "+sentence.getLine() +"-----------------------");
-
-                for (int j=0;j<sentence.getSentenceLength();j++){
-                    Word word=sentence.getWords().get(j);
-                    List<Integer > list=new ArrayList<>(cacheBuilder.getWordCache().get(word));
-                    //todo :replace the list with map
-                    list.remove(sentencePosition);
-                    workingArray[j]=list;
-                    logger.info("word " +word +" found at "+workingArray[j]);
-                }
-                Map<Integer,List<Integer>> mapResult= handleDataFromSingleSentence(workingArray,sentencePosition);
-                mapResult.entrySet().forEach(entry->{
-                    if (!set.contains(entry)){
-                        set.add(entry);
-                    }
-                });
-        }
-
-        logger.info("Final result"+set);
-        return set;
-    }
+//    private Set<Map.Entry<Integer, List<Integer>>>  analyzeSingleCache(CacheBuilder cacheBuilder){
+//        logger.info("\r\n\r\n");
+//        logger.info("analyzeSingleCache  CacheBuilder({})",cacheBuilder.getSentenceLength());
+//        logger.info(cacheBuilder);
+//        Set<Map.Entry<Integer, List<Integer>>> set=new HashSet<>();
+//
+//
+//
+//        for(int i=0;i<cacheBuilder.getSentences().size();i++){
+//                List<Integer>[] workingArray = new ArrayList[cacheBuilder.getSentenceLength()];
+//                Sentence sentence=cacheBuilder.getSentences().get(i);
+//                Integer sentencePosition=new Integer(sentence.getLine());
+//                logger.info("----------------  sentence "+sentence.getLine() +"-----------------------");
+//
+//                for (int j=0;j<sentence.getSentenceLength();j++){
+//                    Word word=sentence.getWords().get(j);
+//                    List<Integer > list=new ArrayList<>(cacheBuilder.getWordCache().get(word));
+//                    //todo :replace the list with map
+//                    list.remove(sentencePosition);
+//                    workingArray[j]=list;
+//                    logger.info("word " +word +" found at "+workingArray[j]);
+//                }
+//                Map<Integer,List<Integer>> mapResult= handleDataFromSingleSentence(workingArray,sentencePosition);
+//                mapResult.entrySet().forEach(entry->{
+//                    if (!set.contains(entry)){
+//                        set.add(entry);
+//                    }
+//                });
+//        }
+//
+//        logger.info("Final result"+set);
+//        return set;
+//    }
 
     /**
      * N =sentence word count;
