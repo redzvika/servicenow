@@ -1,4 +1,4 @@
-package test.com.servicenow;
+package com.servicenow.investigation;
 
 import org.junit.After;
 import org.junit.Assert;
