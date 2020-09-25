@@ -20,13 +20,14 @@ public class Investigator {
     public static void main(String[] args) {
 
         Investigator investigator = new Investigator();
-        investigator.investigateSentences(Paths.get("src/main/resources/input_6.txt"), Paths.get("c:\\temp\\output.txt"));
+        investigator.investigateSentences(Paths.get("src/main/resources/input_6.txt"), Paths.get("c:/temp/investigation_result.txt"));
     }
 
 
     public void investigateSentences(Path fileSource, Path fileOutput) {
         try {
 
+            logger.info("reading form {} writing to {}",fileSource.toFile().getAbsolutePath(), fileOutput.toFile().getAbsolutePath());
             DataParser dataParser = new DataParser(PREFIX_TO_IGNORE);
             dataParser.setFilePathList(Arrays.asList(fileSource));
 
@@ -42,6 +43,7 @@ public class Investigator {
 
             Files.write(fileOutput, builder.toString().getBytes());
         } catch (Exception e) {
+            logger.error("Error while handling investigator log", e);
             e.printStackTrace();
         }
     }
