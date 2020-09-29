@@ -22,10 +22,19 @@ pass input file and output file.
 #### **Limitations and assumptions**
 
 
-- The file input contains the same length of sentences.
+- The file input contains sentences  with the same length
 - The sentences in the file contain data and time.
 - There are no duplicate sentences (disregard (data,time) prefix)  
 - The "words" in the sentence are separated by space. 
+- First phase can improved to O(NxM) due to lack of time.
 
+#### Complexity
+- **First phase** O(NxM<sup>2</sup>) <br>traverse each line (N) <BR> for each line traverse (M) words <br> concatenate a string from all the words except the missing word  
+- **Second phase** O(NxM)  <br>traverse each line (N) <BR> for each line traverse (M) hashValues and push to list of (M) maps. 
+- **Third phase** O(NxM<sup>2</sup>) <br> traverse the List of maps (M) <br> for each map traverse all values 
+<br>&nbsp;&nbsp;&nbsp;**scenario** : 'no similar sentences',  we will have N hashvalues with list containing 1 sentence
+<br>&nbsp;&nbsp;&nbsp;**scenario** : 'all sentences are similar in the same position' , we will have one hashvalue with list containing N sentences (**only one of the maps in the list!**)
+<br>&nbsp;&nbsp;&nbsp;**scenario** : 'max similarities of sentences' , we will have N hashvalues with list containing M sentences 
+<br> conclusion the complexity is max of all three phases  O(NxM<sup>2</sup>) .
  
     
