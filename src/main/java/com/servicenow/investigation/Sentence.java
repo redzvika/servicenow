@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -30,38 +31,11 @@ public class Sentence {
         logger.debug("Sentence line [{}]  '{}' ", line, raw);
     }
 
-    public int getSentenceLength() {
-        return words.size();
-    }
-
-    /**
-     * calculate the MD5 hash value of a string
-     * form the wordsArray concatenate the words with space ,except the missingWord (by index)
-     * calculate MD5 hash value for the concatenated string.
-     *
-     * @param missingWord
-     * @param wordsArray
-     * @return
-     */
-    private String calculateHashForMissingWord(int missingWord, String[] wordsArray) {
-        StringBuilder builder = new StringBuilder();
-        for (int wordCounter = 0; wordCounter < wordsArray.length; wordCounter++) {
-            if (wordCounter != missingWord) {
-                builder.append(wordsArray[wordCounter]);
-                if (wordCounter != wordsArray.length - 1) {
-                    builder.append(" ");
-                }
-            }
-        }
-        logger.debug("missingWordPosition[{}] ,wordsArray {}, missingString:{}", missingWord, wordsArray, builder.toString());
-        return DigestUtils.md5Hex(builder.toString()).toUpperCase();
-    }
-
 
     /**
      * Fill the hashValueList of the sentence with hash values calculated for each "word" in the sentence.
      * we traverse the workingArray by order
-     * for each "word" calculate  it's hash value (The concatenated sentence without the selected "word")
+     * use generateHashValuesList to get list of hash values of "missing" words.
      * insert this value into hashValueList in the same order.
      *
      * @param prefixToIgnore
@@ -71,12 +45,43 @@ public class Sentence {
         logger.warn("skipping {} words in sentence", prefixToIgnore);
         String[] workingArray = Arrays.copyOfRange(split, prefixToIgnore, split.length);
         // skip date and time.
-
-        for (int position = 0; position < workingArray.length; position++) {
-            words.add(workingArray[position]);
-            hashValueList.add(calculateHashForMissingWord(position, workingArray));
-        }
+        hashValueList.addAll(generateHashValuesList(workingArray));
+        Collections.addAll(words, workingArray);
     }
+
+    /**
+     * calculate hash values for each "missing" word in the sentence
+     * @param words
+     * @return
+     */
+    private List<String> generateHashValuesList(String  [] words){
+        Integer [] position=new Integer[words.length];
+
+        List<String> list=new ArrayList<>();
+        StringBuilder builder=new StringBuilder();
+
+        int counter=0;
+        int startPosition=0;
+        for (String word : words) {
+            position[counter]=startPosition;
+            builder.append(word).append(" ");
+            startPosition=builder.toString().length();
+            counter++;
+        }
+        String baseString=builder.toString();
+
+        for (counter=0;counter<words.length;counter++) {
+            String blanked= removeFromStartToFinish(baseString,position[counter],position[counter]+words[counter].length()).trim();
+            logger.debug("missingWordPosition[{}] ,wordsArray {}, missingString:{}", words[counter], words, blanked);
+            list.add(DigestUtils.md5Hex(blanked).toUpperCase());
+        }
+        return list;
+    }
+
+    private String removeFromStartToFinish(String input, int start, int finish){
+        return input.substring(0,start)+input.substring(finish);
+    }
+
 
     @Override
     public String toString() {

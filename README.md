@@ -26,10 +26,10 @@ pass input file and output file.
 - The sentences in the file contain data and time.
 - There are no duplicate sentences (disregard (data,time) prefix)  
 - The "words" in the sentence are separated by space. 
-- First phase can improved to O(NxM) due to lack of time.
+
 
 #### Complexity
-- **First phase** O(NxM<sup>2</sup>) <br>traverse each line (N) <BR> for each line traverse (M) words <br> concatenate a string from all the words except the missing word  
+- **First phase** O(NxM) <br>traverse each line (N) <BR> for each line traverse (M) words ,calculate hash value of all the words except the 'selected' word.  
 - **Second phase** O(NxM)  <br>traverse each line (N) <BR> for each line traverse (M) hashValues and push to list of (M) maps. 
 - **Third phase** O(NxM<sup>2</sup>) <br> traverse the List of maps (M) <br> for each map traverse all values 
 <br>&nbsp;&nbsp;&nbsp;**scenario** : 'no similar sentences',  we will have N hashvalues with list containing 1 sentence
