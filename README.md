@@ -5,6 +5,7 @@
   there are two input files that are used for testing the app.
   - input_6.txt that contains sentences with 6 words (discard date and time)
   - input_4.txt that contains sentences with 4 words (discard date and time)
+  - input_3.txt that contains sentences with 3 words (discard date and time)
  
 * log4j2.xml configured for log level debug.
 
@@ -23,7 +24,7 @@ pass input file and output file.
 
 
 - The file input contains sentences  with the same length
-- The sentences in the file contain data and time.
+- The sentences in the file contain date and time.
 - There are no duplicate sentences (disregard (data,time) prefix)  
 - The "words" in the sentence are separated by space. 
 
