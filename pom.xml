@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <log4j2.version>2.13.3</log4j2.version>
+        <log4j2.version>2.17.1</log4j2.version>
         <lombolk.version>1.16.16</lombolk.version>
         <apache-commons-codec.version>1.13</apache-commons-codec.version>
         <junit-platform.version>1.2.0</junit-platform.version>
